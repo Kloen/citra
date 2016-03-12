@@ -143,10 +143,18 @@ public slots:
 signals:
     /// Emitted when the window is closed
     void Closed();
+    /// Emitted when the window focus changes
+    void focusChanged(bool has_focus);
 
 private:
     void OnMinimalClientAreaChangeRequest(
         const std::pair<unsigned, unsigned>& minimal_size) override;
+
+    /// Capture focus gain to unset pause
+    void focusInEvent(QFocusEvent*) override;
+
+    /// Capture focus lost to set pause
+    void focusOutEvent(QFocusEvent*) override;
 
     GGLWidgetInternal* child;
 

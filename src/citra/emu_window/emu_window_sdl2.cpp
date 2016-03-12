@@ -50,10 +50,32 @@ bool EmuWindow_SDL2::IsOpen() const {
     return is_open;
 }
 
+bool EmuWindow_SDL2::HasFocus() const {
+    return has_focus;
+}
+
 void EmuWindow_SDL2::OnResize() {
     int width, height;
     SDL_GetWindowSize(render_window, &width, &height);
     UpdateCurrentFramebufferLayout(width, height);
+}
+
+void EmuWindow_SDL2::WaitForFocus() {
+    while (!has_focus) {
+        SDL_Event event;
+        SDL_WaitEvent(&event);
+        if (event.type == SDL_WINDOWEVENT) {
+            switch (event.window.event) {
+            case SDL_WINDOWEVENT_FOCUS_GAINED:
+                has_focus = true;
+                break;
+            case SDL_WINDOWEVENT_CLOSE:
+                has_focus = true;
+                is_open = false;
+                break;
+            }
+        }
+    }
 }
 
 EmuWindow_SDL2::EmuWindow_SDL2() {
@@ -137,6 +159,12 @@ void EmuWindow_SDL2::PollEvents() {
             case SDL_WINDOWEVENT_RESTORED:
             case SDL_WINDOWEVENT_MINIMIZED:
                 OnResize();
+                break;
+            case SDL_WINDOWEVENT_FOCUS_GAINED:
+                has_focus = true;
+                break;
+            case SDL_WINDOWEVENT_FOCUS_LOST:
+                has_focus = false;
                 break;
             case SDL_WINDOWEVENT_CLOSE:
                 is_open = false;

@@ -32,6 +32,13 @@
            </widget>
           </item>
           <item>
+           <widget class="QCheckBox" name="toogle_pause_onfocuslost">
+            <property name="text">
+             <string>Pause on focus lost</string>
+            </property>
+           </widget>
+          </item>
+          <item>
            <widget class="QCheckBox" name="toggle_check_exit">
             <property name="text">
              <string>Confirm exit while emulation is running</string>

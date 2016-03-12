@@ -28,6 +28,7 @@ struct Values {
     bool single_window_mode;
     bool display_titlebar;
 
+    bool pause_onfocuslost;
     bool confirm_before_closing;
     bool first_start;
 
