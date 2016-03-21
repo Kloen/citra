@@ -10,12 +10,15 @@
 #   include <Windows.h>
 #endif
 
+#include "common/logging/log_config.h"
 #include "common/logging/backend.h"
 #include "common/logging/log.h"
+#include "common/logging/log_config.h"
 #include "common/logging/text_formatter.h"
 
 #include "common/assert.h"
 #include "common/common_funcs.h"
+#include "common/file_util.h"
 #include "common/string_util.h"
 
 namespace Log {
@@ -60,6 +63,16 @@ void PrintMessage(const Entry& entry) {
     FormatLogMessage(entry, format_buffer.data(), format_buffer.size());
     fputs(format_buffer.data(), stderr);
     fputc('\n', stderr);
+
+    if (Config::IsLogFileEnabled()) {
+        FILE* file;
+        file = fopen(Config::GetLogDir().append("/").append(Config::GetLogFile()).c_str(), "a+");
+        if (file != nullptr) {
+            fputs(format_buffer.data(), file);
+            fputc('\n', file);
+            fclose(file);
+        }
+    }
 }
 
 void PrintColoredMessage(const Entry& entry) {

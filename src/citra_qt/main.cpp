@@ -30,6 +30,7 @@
 #include "citra_qt/debugger/ramview.h"
 #include "citra_qt/debugger/registers.h"
 
+#include "common/file_util.h"
 #include "common/make_unique.h"
 #include "common/microprofile.h"
 #include "common/platform.h"
@@ -39,6 +40,7 @@
 #include "common/logging/backend.h"
 #include "common/logging/filter.h"
 #include "common/logging/log.h"
+#include "common/logging/log_config.h"
 #include "common/logging/text_formatter.h"
 
 #include "core/core.h"
@@ -52,9 +54,19 @@
 
 GMainWindow::GMainWindow() : emu_thread(nullptr)
 {
+
     Pica::g_debug_context = Pica::DebugContext::Construct();
 
     Config config;
+
+    Log::Config::SetLogFile(Settings::values.log_file);
+    Log::Config::SetLogFileEnabled(Settings::values.use_log_file);
+    Log::Config::SetLogFileByGameEnabled(Settings::values.use_log_file_by_game);
+
+    if (FileUtil::Exists(Settings::values.log_file))
+        FileUtil::Delete(Settings::values.log_file);
+
+    FileUtil::CreateEmptyFile(Settings::values.log_file);
 
     ui.setupUi(this);
     statusBar()->hide();

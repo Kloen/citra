@@ -60,6 +60,10 @@ struct Values {
     float bg_green;
     float bg_blue;
 
+    bool use_log_file;
+    bool use_log_file_by_game;
+    std::string log_dir;
+    std::string log_file;
     std::string log_filter;
 
     // Debugging

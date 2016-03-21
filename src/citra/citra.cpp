@@ -16,7 +16,9 @@
 #include <getopt.h>
 #endif
 
+#include "common/file_util.h"
 #include "common/logging/log.h"
+#include "common/logging/log_config.h"
 #include "common/logging/backend.h"
 #include "common/logging/filter.h"
 #include "common/make_unique.h"
@@ -74,6 +76,16 @@ int main(int argc, char **argv) {
     }
 
     Config config;
+
+    Log::Config::SetLogFile(Settings::values.log_file);
+    Log::Config::SetLogFileEnabled(Settings::values.use_log_file);
+    Log::Config::SetLogFileByGameEnabled(Settings::values.use_log_file_by_game);
+
+    if (FileUtil::Exists(Settings::values.log_file))
+        FileUtil::Delete(Settings::values.log_file);
+
+    FileUtil::CreateEmptyFile(Settings::values.log_file);
+
     log_filter.ParseFilterString(Settings::values.log_filter);
 
     GDBStub::ToggleServer(Settings::values.use_gdbstub);

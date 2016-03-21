@@ -59,7 +59,11 @@ void Config::ReadValues() {
     Settings::values.region_value = qt_config->value("region_value", 1).toInt();
     qt_config->endGroup();
 
-    qt_config->beginGroup("Miscellaneous");
+    qt_config->beginGroup("Logger");
+    Settings::values.use_log_file = qt_config->value("use_log_file", false).toBool();
+    Settings::values.use_log_file_by_game = qt_config->value("use_log_file_by_game", false).toBool();
+    Settings::values.log_dir = qt_config->value("log_dir", "logs").toString().toStdString();
+    Settings::values.log_file = qt_config->value("log_file", "console.log").toString().toStdString();
     Settings::values.log_filter = qt_config->value("log_filter", "*:Info").toString().toStdString();
     qt_config->endGroup();
 
@@ -99,7 +103,11 @@ void Config::SaveValues() {
     qt_config->setValue("region_value", Settings::values.region_value);
     qt_config->endGroup();
 
-    qt_config->beginGroup("Miscellaneous");
+    qt_config->beginGroup("Logger");
+    qt_config->setValue("use_log_file", Settings::values.use_log_file);
+    qt_config->setValue("use_log_file_by_game", Settings::values.use_log_file_by_game);
+    qt_config->setValue("log_dir", QString::fromStdString(Settings::values.log_dir));
+    qt_config->setValue("log_file", QString::fromStdString(Settings::values.log_file));
     qt_config->setValue("log_filter", QString::fromStdString(Settings::values.log_filter));
     qt_config->endGroup();
 
