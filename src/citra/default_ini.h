@@ -62,10 +62,17 @@ use_virtual_sd =
 # 0: Japan, 1: USA (default), 2: Europe, 3: Australia, 4: China, 5: Korea, 6: Taiwan
 region_value =
 
-[Miscellaneous]
+[Logging]
+# Log the console output to a file
+use_log_file=true
+# Log the console output to a file based on the game running
+use_log_by_game=true
+# Folder to store the logs
+log_dir=logs
+# Common log file (if use_log_file=true and use_log_by_game=false)
+log_file = console.log
 # A filter which removes logs below a certain logging level.
 # Examples: *:Debug Kernel.SVC:Trace Service.*:Critical
-log_file = console.log
 log_filter = *:Info
 
 [Debugging]

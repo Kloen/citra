@@ -11,6 +11,7 @@ set(SRCS
             logging/text_formatter.cpp
             logging/backend.cpp
             logging/log_config.cpp
+            logging/log_utils.cpp
             memory_util.cpp
             microprofile.cpp
             misc.cpp
@@ -43,6 +44,7 @@ set(HEADERS
             logging/filter.h
             logging/log.h
             logging/log_config.h
+            logging/log_utils.h
             logging/backend.h
             make_unique.h
             math_util.h

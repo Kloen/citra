@@ -41,6 +41,7 @@
 #include "common/logging/filter.h"
 #include "common/logging/log.h"
 #include "common/logging/log_config.h"
+#include "common/logging/log_utils.h"
 #include "common/logging/text_formatter.h"
 
 #include "core/core.h"
@@ -62,11 +63,7 @@ GMainWindow::GMainWindow() : emu_thread(nullptr)
     Log::Config::SetLogFile(Settings::values.log_file);
     Log::Config::SetLogFileEnabled(Settings::values.use_log_file);
     Log::Config::SetLogFileByGameEnabled(Settings::values.use_log_file_by_game);
-
-    if (FileUtil::Exists(Settings::values.log_file))
-        FileUtil::Delete(Settings::values.log_file);
-
-    FileUtil::CreateEmptyFile(Settings::values.log_file);
+    Log::Utils::InitLogFile(Log::Config::GetLogFile());
 
     ui.setupUi(this);
     statusBar()->hide();
