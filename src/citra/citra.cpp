@@ -78,6 +78,7 @@ int main(int argc, char **argv) {
 
     Config config;
 
+    Log::Config::SetLogDir(Settings::values.log_dir);
     Log::Config::SetLogFile(Settings::values.log_file);
     Log::Config::SetLogFileEnabled(Settings::values.use_log_file);
     Log::Config::SetLogFileByGameEnabled(Settings::values.use_log_file_by_game);

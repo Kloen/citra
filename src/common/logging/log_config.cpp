@@ -28,11 +28,11 @@ bool Config::IsLogFileByGameEnabled() {
 }
 
 void Log::Config::SetLogDir(std::string log_file_dir) {
-    log_file = log_file_dir;
+    log_dir = log_file_dir;
 }
 
 std::string Log::Config::GetLogDir() {
-    return log_file;
+    return log_dir;
 }
 
 void Log::Config::SetLogFile(std::string log_file_dir){
