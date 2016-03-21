@@ -63,7 +63,9 @@ GMainWindow::GMainWindow() : emu_thread(nullptr)
     Log::Config::SetLogFile(Settings::values.log_file);
     Log::Config::SetLogFileEnabled(Settings::values.use_log_file);
     Log::Config::SetLogFileByGameEnabled(Settings::values.use_log_file_by_game);
-    Log::Utils::InitLogFile(Log::Config::GetLogFile());
+
+    if (Log::Config::IsLogFileEnabled())
+        Log::Utils::InitLogFile(Log::Config::GetLogFile());
 
     ui.setupUi(this);
     statusBar()->hide();
@@ -326,6 +328,9 @@ void GMainWindow::BootGame(const std::string& filename) {
 
     if (!LoadROM(filename))
         return;
+
+    if (Log::Config::IsLogFileByGameEnabled())
+        Log::Utils::InitLogFile(filename);
 
     // Create and start the emulation thread
     emu_thread = Common::make_unique<EmuThread>(render_window);

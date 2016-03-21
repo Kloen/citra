@@ -81,7 +81,11 @@ int main(int argc, char **argv) {
     Log::Config::SetLogFile(Settings::values.log_file);
     Log::Config::SetLogFileEnabled(Settings::values.use_log_file);
     Log::Config::SetLogFileByGameEnabled(Settings::values.use_log_file_by_game);
-    Log::Utils::InitLogFile(Log::Config::GetLogFile());
+
+    if (Log::Config::IsLogFileByGameEnabled())
+        Log::Utils::InitLogFile(boot_filename);
+    else if (Log::Config::IsLogFileEnabled())
+        Log::Utils::InitLogFile(Log::Config::GetLogFile());
 
     log_filter.ParseFilterString(Settings::values.log_filter);
 
