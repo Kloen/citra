@@ -49,13 +49,16 @@ static const std::array<int, Settings::NativeInput::NUM_INPUTS> defaults = {
 };
 
 void Config::ReadValues() {
+    Settings::values.controls_profile = sdl2_config->GetInteger("Controls", "current_profile", 0);
+
     // Controls
     for (int i = 0; i < Settings::NativeInput::NUM_INPUTS; ++i) {
         Settings::values.input_mappings[Settings::NativeInput::All[i]] =
-            sdl2_config->GetInteger("Controls", Settings::NativeInput::Mapping[i], defaults[i]);
+            sdl2_config->GetInteger("Profile_" + Settings::values.controls_profile,
+                                    Settings::NativeInput::Mapping[i], defaults[i]);
     }
-    Settings::values.pad_circle_modifier_scale =
-        (float)sdl2_config->GetReal("Controls", "pad_circle_modifier_scale", 0.5);
+    Settings::values.pad_circle_modifier_scale = (float)sdl2_config->GetReal(
+        "Profile_" + Settings::values.controls_profile, "pad_circle_modifier_scale", 0.5);
 
     // Core
     Settings::values.use_cpu_jit = sdl2_config->GetBoolean("Core", "use_cpu_jit", true);

@@ -8,6 +8,71 @@ namespace DefaultINI {
 
 const char* sdl2_config_file = R"(
 [Controls]
+# Controls profile
+# 0: Default, 1: Profile 1, 2: Profile 2
+current_profile =
+
+[Profile_0]
+pad_start =
+pad_select =
+pad_home =
+pad_dup =
+pad_ddown =
+pad_dleft =
+pad_dright =
+pad_a =
+pad_b =
+pad_x =
+pad_y =
+pad_l =
+pad_r =
+pad_zl =
+pad_zr =
+pad_cup =
+pad_cdown =
+pad_cleft =
+pad_cright =
+pad_circle_up =
+pad_circle_down =
+pad_circle_left =
+pad_circle_right =
+pad_circle_modifier =
+
+# The applied modifier scale to circle pad.
+# Must be in range of 0.0-1.0. Defaults to 0.5
+pad_circle_modifier_scale =
+
+[Profile_1]
+pad_start =
+pad_select =
+pad_home =
+pad_dup =
+pad_ddown =
+pad_dleft =
+pad_dright =
+pad_a =
+pad_b =
+pad_x =
+pad_y =
+pad_l =
+pad_r =
+pad_zl =
+pad_zr =
+pad_cup =
+pad_cdown =
+pad_cleft =
+pad_cright =
+pad_circle_up =
+pad_circle_down =
+pad_circle_left =
+pad_circle_right =
+pad_circle_modifier =
+
+# The applied modifier scale to circle pad.
+# Must be in range of 0.0-1.0. Defaults to 0.5
+pad_circle_modifier_scale =
+
+[Profile_2]
 pad_start =
 pad_select =
 pad_home =
