@@ -73,6 +73,9 @@ struct Values {
     bool is_new_3ds;
 
     // Controls
+    int controls_profile;
+
+    // Controls Profile
     std::array<int, NativeInput::NUM_INPUTS> input_mappings;
     float pad_circle_modifier_scale;
 
