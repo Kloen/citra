@@ -55,7 +55,7 @@ void Config::ReadValues() {
             sdl2_config->GetInteger("Controls", Settings::NativeInput::Mapping[i], defaults[i]);
     }
     Settings::values.pad_circle_modifier_scale =
-        (float)sdl2_config->GetReal("Controls", "pad_circle_modifier_scale", 0.5);
+        sdl2_config->GetReal("Controls", "pad_circle_modifier_scale", 0.5f);
 
     // Core
     Settings::values.use_cpu_jit = sdl2_config->GetBoolean("Core", "use_cpu_jit", true);
@@ -69,9 +69,9 @@ void Config::ReadValues() {
     Settings::values.toggle_framelimit =
         sdl2_config->GetBoolean("Renderer", "toggle_framelimit", true);
 
-    Settings::values.bg_red = (float)sdl2_config->GetReal("Renderer", "bg_red", 1.0);
-    Settings::values.bg_green = (float)sdl2_config->GetReal("Renderer", "bg_green", 1.0);
-    Settings::values.bg_blue = (float)sdl2_config->GetReal("Renderer", "bg_blue", 1.0);
+    Settings::values.bg_red = sdl2_config->GetReal("Renderer", "bg_red", 1.0f);
+    Settings::values.bg_green = sdl2_config->GetReal("Renderer", "bg_green", 1.0f);
+    Settings::values.bg_blue = sdl2_config->GetReal("Renderer", "bg_blue", 1.0f);
 
     // Layout
     Settings::values.layout_option =

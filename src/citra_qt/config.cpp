@@ -34,7 +34,7 @@ void Config::ReadValues() {
                 .toInt();
     }
     Settings::values.pad_circle_modifier_scale =
-        qt_config->value("pad_circle_modifier_scale", 0.5).toFloat();
+        qt_config->value("pad_circle_modifier_scale", 0.5f).toFloat();
     qt_config->endGroup();
 
     qt_config->beginGroup("Core");
@@ -44,13 +44,13 @@ void Config::ReadValues() {
     qt_config->beginGroup("Renderer");
     Settings::values.use_hw_renderer = qt_config->value("use_hw_renderer", true).toBool();
     Settings::values.use_shader_jit = qt_config->value("use_shader_jit", true).toBool();
-    Settings::values.resolution_factor = qt_config->value("resolution_factor", 1.0).toFloat();
+    Settings::values.resolution_factor = qt_config->value("resolution_factor", 1.0f).toFloat();
     Settings::values.use_vsync = qt_config->value("use_vsync", false).toBool();
     Settings::values.toggle_framelimit = qt_config->value("toggle_framelimit", true).toBool();
 
-    Settings::values.bg_red = qt_config->value("bg_red", 1.0).toFloat();
-    Settings::values.bg_green = qt_config->value("bg_green", 1.0).toFloat();
-    Settings::values.bg_blue = qt_config->value("bg_blue", 1.0).toFloat();
+    Settings::values.bg_red = qt_config->value("bg_red", 1.0f).toFloat();
+    Settings::values.bg_green = qt_config->value("bg_green", 1.0f).toFloat();
+    Settings::values.bg_blue = qt_config->value("bg_blue", 1.0f).toFloat();
     qt_config->endGroup();
 
     qt_config->beginGroup("Layout");
