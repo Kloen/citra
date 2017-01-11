@@ -28,6 +28,10 @@ const std::array<QVariant, Settings::NativeInput::NUM_INPUTS> Config::defaults =
 
 void Config::ReadValues() {
     qt_config->beginGroup("Controls");
+    Settings::values.controls_profile =
+        qt_config->value("current_profile", "A").toString().toStdString();
+    qt_config->endGroup();
+    qt_config->beginGroup(QString::fromStdString("Profile_" + Settings::values.controls_profile));
     for (int i = 0; i < Settings::NativeInput::NUM_INPUTS; ++i) {
         Settings::values.input_mappings[Settings::NativeInput::All[i]] =
             qt_config->value(QString::fromStdString(Settings::NativeInput::Mapping[i]), defaults[i])
@@ -136,6 +140,10 @@ void Config::ReadValues() {
 
 void Config::SaveValues() {
     qt_config->beginGroup("Controls");
+    qt_config->setValue("current_profile",
+                        QString::fromStdString(Settings::values.controls_profile));
+    qt_config->endGroup();
+    qt_config->beginGroup(QString::fromStdString("Profile_" + Settings::values.controls_profile));
     for (int i = 0; i < Settings::NativeInput::NUM_INPUTS; ++i) {
         qt_config->setValue(QString::fromStdString(Settings::NativeInput::Mapping[i]),
                             Settings::values.input_mappings[Settings::NativeInput::All[i]]);

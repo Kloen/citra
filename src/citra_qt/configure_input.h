@@ -12,6 +12,7 @@
 #include "ui_configure_input.h"
 
 class QPushButton;
+class QComboBox;
 class QString;
 class QTimer;
 
@@ -41,6 +42,8 @@ private:
     /// Each input is configured to respond to the press of a Qt::Key.
     std::map<Settings::NativeInput::Values, Qt::Key> key_map;
 
+    /// Swap current profile
+    void swapProfile();
     /// Load configuration settings.
     void loadConfiguration();
     /// Restore all buttons to their default values.

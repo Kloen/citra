@@ -65,6 +65,9 @@ ConfigureInput::ConfigureInput(QWidget* parent)
     }
 
     connect(ui->buttonRestoreDefaults, &QPushButton::released, [this]() { restoreDefaults(); });
+    connect(ui->profile_combobox,
+            static_cast<void (QComboBox::*)(const QString&)>(&QComboBox::currentIndexChanged),
+            [this] { swapProfile(); });
 
     timer->setSingleShot(true);
     connect(timer.get(), &QTimer::timeout, [this]() {
@@ -100,6 +103,22 @@ void ConfigureInput::restoreDefaults() {
     }
     updateButtonLabels();
     applyConfiguration();
+}
+
+void ConfigureInput::swapProfile() {
+    switch (ui->profile_combobox->currentIndex()) {
+    case 0:
+        Settings::values.controls_profile = "A";
+        break;
+    case 1:
+        Settings::values.controls_profile = "B";
+        break;
+    case 2:
+        Settings::values.controls_profile = "C";
+        break;
+    }
+
+    loadConfiguration();
 }
 
 void ConfigureInput::updateButtonLabels() {

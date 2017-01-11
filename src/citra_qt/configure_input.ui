@@ -15,6 +15,49 @@
   </property>
   <layout class="QVBoxLayout" name="verticalLayout_5">
    <item>
+      <widget class="QGroupBox" name="groupBox_4">
+       <property name="title">
+        <string>Profile</string>
+       </property>
+       <layout class="QHBoxLayout" name="horizontalLayout_5">
+        <item>
+         <layout class="QVBoxLayout" name="verticalLayout_6">
+          <item>
+           <layout class="QHBoxLayout" name="horizontalLayout_6">
+            <item>
+             <widget class="QLabel" name="label_1">
+              <property name="text">
+               <string>Input profile:</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QComboBox" name="profile_combobox">
+              <item>
+               <property name="text">
+                <string>Default</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string>Profile 1</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string>Profile 2</string>
+               </property>
+              </item>
+             </widget>
+            </item>
+           </layout>
+          </item>
+         </layout>
+        </item>
+       </layout>
+      </widget>
+     </item>
+    <item>
     <layout class="QGridLayout" name="gridLayout_7">
      <item row="0" column="0">
       <widget class="QGroupBox" name="faceButtons">
@@ -118,7 +161,7 @@
         <item row="1" column="0">
          <layout class="QVBoxLayout" name="verticalLayout_12">
           <item>
-           <widget class="QLabel" name="label_34">
+           <widget class="QLabel" name="label_36">
             <property name="text">
              <string>Up:</string>
             </property>
@@ -275,7 +318,6 @@
          </layout>
         </item>
        </layout>
-       <zorder></zorder>
       </widget>
      </item>
      <item row="1" column="1">

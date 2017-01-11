@@ -73,7 +73,7 @@ struct Values {
     bool is_new_3ds;
 
     // Controls Profile
-    int controls_profile;
+    std::string controls_profile;
 
     // Controls
     std::array<int, NativeInput::NUM_INPUTS> input_mappings;

@@ -49,7 +49,7 @@ static const std::array<int, Settings::NativeInput::NUM_INPUTS> defaults = {
 };
 
 void Config::ReadValues() {
-    Settings::values.controls_profile = sdl2_config->GetInteger("Controls", "current_profile", 0);
+    Settings::values.controls_profile = sdl2_config->Get("Controls", "current_profile", "A");
 
     // Controls
     for (int i = 0; i < Settings::NativeInput::NUM_INPUTS; ++i) {
