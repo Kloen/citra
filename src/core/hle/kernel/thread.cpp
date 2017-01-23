@@ -403,7 +403,7 @@ ResultVal<SharedPtr<Thread>> Thread::Create(std::string name, VAddr entry_point,
                               ErrorSummary::OutOfResource, ErrorLevel::Permanent);
         }
 
-        u32 offset = linheap_memory->size();
+        u32 offset = static_cast<u32>(linheap_memory->size());
 
         // Allocate some memory from the end of the linear heap for this region.
         linheap_memory->insert(linheap_memory->end(), Memory::PAGE_SIZE, 0);
@@ -411,7 +411,7 @@ ResultVal<SharedPtr<Thread>> Thread::Create(std::string name, VAddr entry_point,
         Kernel::g_current_process->linear_heap_used += Memory::PAGE_SIZE;
 
         tls_slots.emplace_back(0); // The page is completely available at the start
-        available_page = tls_slots.size() - 1;
+        available_page = static_cast<u32>(tls_slots.size() - 1);
         available_slot = 0; // Use the first slot in the new page
 
         auto& vm_manager = Kernel::g_current_process->vm_manager;
