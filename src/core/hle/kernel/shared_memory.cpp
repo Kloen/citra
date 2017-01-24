@@ -35,7 +35,7 @@ SharedPtr<SharedMemory> SharedMemory::Create(SharedPtr<Process> owner_process, u
                    "Not enough space in region to allocate shared memory!");
 
         shared_memory->backing_block = linheap_memory;
-        shared_memory->backing_block_offset = linheap_memory->size();
+        shared_memory->backing_block_offset = static_cast<u32>(linheap_memory->size());
         // Allocate some memory from the end of the linear heap for this region.
         linheap_memory->insert(linheap_memory->end(), size, 0);
         memory_region->used += size;
