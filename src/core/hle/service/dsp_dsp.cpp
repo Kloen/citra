@@ -139,7 +139,7 @@ static void LoadComponent(Service::Interface* self) {
     Memory::ReadBlock(buffer, component_data.data(), component_data.size());
 
     LOG_INFO(Service_DSP, "Firmware hash: %#" PRIx64,
-             Common::ComputeHash64(component_data.data(), component_data.size()));
+             Common::ComputeHash64(component_data.data(), static_cast<int>(component_data.size())));
     // Some versions of the firmware have the location of DSP structures listed here.
     ASSERT(size > 0x37C);
     LOG_INFO(Service_DSP, "Structures hash: %#" PRIx64,
