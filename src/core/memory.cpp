@@ -415,8 +415,7 @@ void ReadBlock(const VAddr src_addr, void* dest_buffer, const size_t size) {
             break;
         }
         case PageType::RasterizerCachedMemory: {
-            RasterizerFlushRegion(VirtualToPhysicalAddress(current_vaddr),
-                                  static_cast<u32>(copy_amount));
+            RasterizerFlushRegion(VirtualToPhysicalAddress(current_vaddr), copy_amount);
 
             std::memcpy(dest_buffer, GetPointerFromVMA(current_vaddr), copy_amount);
             break;
@@ -424,8 +423,7 @@ void ReadBlock(const VAddr src_addr, void* dest_buffer, const size_t size) {
         case PageType::RasterizerCachedSpecial: {
             DEBUG_ASSERT(GetMMIOHandler(current_vaddr));
 
-            RasterizerFlushRegion(VirtualToPhysicalAddress(current_vaddr),
-                                  static_cast<u32>(copy_amount));
+            RasterizerFlushRegion(VirtualToPhysicalAddress(current_vaddr), copy_amount);
 
             GetMMIOHandler(current_vaddr)->ReadBlock(current_vaddr, dest_buffer, copy_amount);
             break;
@@ -488,7 +486,7 @@ void WriteBlock(const VAddr dest_addr, const void* src_buffer, const size_t size
         }
         case PageType::RasterizerCachedMemory: {
             RasterizerFlushAndInvalidateRegion(VirtualToPhysicalAddress(current_vaddr),
-                                               static_cast<u32>(copy_amount));
+                                               copy_amount);
 
             std::memcpy(GetPointerFromVMA(current_vaddr), src_buffer, copy_amount);
             break;
@@ -497,7 +495,7 @@ void WriteBlock(const VAddr dest_addr, const void* src_buffer, const size_t size
             DEBUG_ASSERT(GetMMIOHandler(current_vaddr));
 
             RasterizerFlushAndInvalidateRegion(VirtualToPhysicalAddress(current_vaddr),
-                                               static_cast<u32>(copy_amount));
+                                               copy_amount);
 
             GetMMIOHandler(current_vaddr)->WriteBlock(current_vaddr, src_buffer, copy_amount);
             break;
@@ -545,7 +543,7 @@ void ZeroBlock(const VAddr dest_addr, const size_t size) {
         }
         case PageType::RasterizerCachedMemory: {
             RasterizerFlushAndInvalidateRegion(VirtualToPhysicalAddress(current_vaddr),
-                                               static_cast<u32>(copy_amount));
+                                               copy_amount);
 
             std::memset(GetPointerFromVMA(current_vaddr), 0, copy_amount);
             break;
@@ -554,7 +552,7 @@ void ZeroBlock(const VAddr dest_addr, const size_t size) {
             DEBUG_ASSERT(GetMMIOHandler(current_vaddr));
 
             RasterizerFlushAndInvalidateRegion(VirtualToPhysicalAddress(current_vaddr),
-                                               static_cast<u32>(copy_amount));
+                                               copy_amount);
 
             GetMMIOHandler(current_vaddr)->WriteBlock(current_vaddr, zeros.data(), copy_amount);
             break;
@@ -600,8 +598,7 @@ void CopyBlock(VAddr dest_addr, VAddr src_addr, const size_t size) {
             break;
         }
         case PageType::RasterizerCachedMemory: {
-            RasterizerFlushRegion(VirtualToPhysicalAddress(current_vaddr),
-                                  static_cast<u32>(copy_amount));
+            RasterizerFlushRegion(VirtualToPhysicalAddress(current_vaddr), copy_amount);
 
             WriteBlock(dest_addr, GetPointerFromVMA(current_vaddr), copy_amount);
             break;
@@ -609,8 +606,7 @@ void CopyBlock(VAddr dest_addr, VAddr src_addr, const size_t size) {
         case PageType::RasterizerCachedSpecial: {
             DEBUG_ASSERT(GetMMIOHandler(current_vaddr));
 
-            RasterizerFlushRegion(VirtualToPhysicalAddress(current_vaddr),
-                                  static_cast<u32>(copy_amount));
+            RasterizerFlushRegion(VirtualToPhysicalAddress(current_vaddr), copy_amount);
 
             std::vector<u8> buffer(copy_amount);
             GetMMIOHandler(current_vaddr)->ReadBlock(current_vaddr, buffer.data(), buffer.size());
