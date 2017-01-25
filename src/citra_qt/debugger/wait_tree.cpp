@@ -115,6 +115,8 @@ QString WaitTreeWaitObject::GetResetTypeQString(Kernel::ResetType reset_type) {
         return tr("sticky");
     case Kernel::ResetType::Pulse:
         return tr("pulse");
+    default:
+        return tr("");
     }
 }
 
