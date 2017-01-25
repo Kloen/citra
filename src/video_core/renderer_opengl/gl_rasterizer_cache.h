@@ -220,7 +220,7 @@ public:
 
     /// Write any cached resources overlapping the region back to memory (if dirty) and optionally
     /// invalidate them in the cache
-    void FlushRegion(PAddr addr, u32 size, const CachedSurface* skip_surface, bool invalidate);
+    void FlushRegion(PAddr addr, size_t size, const CachedSurface* skip_surface, bool invalidate);
 
     /// Flush all cached resources tracked by this cache manager
     void FlushAll();

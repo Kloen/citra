@@ -162,12 +162,12 @@ void RasterizerMarkRegionCached(PAddr start, u32 size, int count_delta);
 /**
  * Flushes any externally cached rasterizer resources touching the given region.
  */
-void RasterizerFlushRegion(PAddr start, u32 size);
+void RasterizerFlushRegion(PAddr start, size_t size);
 
 /**
  * Flushes and invalidates any externally cached rasterizer resources touching the given region.
  */
-void RasterizerFlushAndInvalidateRegion(PAddr start, u32 size);
+void RasterizerFlushAndInvalidateRegion(PAddr start, size_t size);
 
 /**
  * Dynarmic has an optimization to memory accesses when the pointer to the page exists that

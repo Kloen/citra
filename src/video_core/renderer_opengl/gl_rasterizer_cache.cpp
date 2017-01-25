@@ -758,7 +758,7 @@ void RasterizerCacheOpenGL::FlushSurface(CachedSurface* surface) {
     cur_state.Apply();
 }
 
-void RasterizerCacheOpenGL::FlushRegion(PAddr addr, u32 size, const CachedSurface* skip_surface,
+void RasterizerCacheOpenGL::FlushRegion(PAddr addr, size_t size, const CachedSurface* skip_surface,
                                         bool invalidate) {
     if (size == 0) {
         return;

@@ -357,13 +357,13 @@ void RasterizerMarkRegionCached(PAddr start, u32 size, int count_delta) {
     }
 }
 
-void RasterizerFlushRegion(PAddr start, u32 size) {
+void RasterizerFlushRegion(PAddr start, size_t size) {
     if (VideoCore::g_renderer != nullptr) {
         VideoCore::g_renderer->Rasterizer()->FlushRegion(start, size);
     }
 }
 
-void RasterizerFlushAndInvalidateRegion(PAddr start, u32 size) {
+void RasterizerFlushAndInvalidateRegion(PAddr start, size_t size) {
     if (VideoCore::g_renderer != nullptr) {
         VideoCore::g_renderer->Rasterizer()->FlushAndInvalidateRegion(start, size);
     }
