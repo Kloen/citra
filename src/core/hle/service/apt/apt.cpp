@@ -210,13 +210,13 @@ void ReceiveParameter(Service::Interface* self) {
 
     cmd_buff[1] = RESULT_SUCCESS.raw; // No error
     cmd_buff[2] = next_parameter.sender_id;
-    cmd_buff[3] = next_parameter.signal;        // Signal type
-    cmd_buff[4] = next_parameter.buffer.size(); // Parameter buffer size
+    cmd_buff[3] = next_parameter.signal;                          // Signal type
+    cmd_buff[4] = static_cast<u32>(next_parameter.buffer.size()); // Parameter buffer size
     cmd_buff[5] = 0x10;
     cmd_buff[6] = 0;
     if (next_parameter.object != nullptr)
         cmd_buff[6] = Kernel::g_handle_table.Create(next_parameter.object).MoveFrom();
-    cmd_buff[7] = (next_parameter.buffer.size() << 14) | 2;
+    cmd_buff[7] = static_cast<u32>((next_parameter.buffer.size() << 14) | 2);
     cmd_buff[8] = buffer;
 
     Memory::WriteBlock(buffer, next_parameter.buffer.data(), next_parameter.buffer.size());
@@ -232,13 +232,13 @@ void GlanceParameter(Service::Interface* self) {
 
     cmd_buff[1] = RESULT_SUCCESS.raw; // No error
     cmd_buff[2] = next_parameter.sender_id;
-    cmd_buff[3] = next_parameter.signal;        // Signal type
-    cmd_buff[4] = next_parameter.buffer.size(); // Parameter buffer size
+    cmd_buff[3] = next_parameter.signal;                          // Signal type
+    cmd_buff[4] = static_cast<u32>(next_parameter.buffer.size()); // Parameter buffer size
     cmd_buff[5] = 0x10;
     cmd_buff[6] = 0;
     if (next_parameter.object != nullptr)
         cmd_buff[6] = Kernel::g_handle_table.Create(next_parameter.object).MoveFrom();
-    cmd_buff[7] = (next_parameter.buffer.size() << 14) | 2;
+    cmd_buff[7] = static_cast<u32>((next_parameter.buffer.size() << 14) | 2);
     cmd_buff[8] = buffer;
 
     Memory::WriteBlock(buffer, next_parameter.buffer.data(),
