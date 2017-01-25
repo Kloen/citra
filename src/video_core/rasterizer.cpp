@@ -681,6 +681,10 @@ static void ProcessTriangleInternal(const Shader::OutputVertex& v0, const Shader
 
                     case ColorModifier::OneMinusSourceBlue:
                         return (Math::Vec3<u8>(255, 255, 255) - values.bbb()).Cast<u8>();
+
+                    default:
+                        UNREACHABLE();
+                        return Math::Vec3<u8>();
                     }
                 };
 
@@ -710,6 +714,10 @@ static void ProcessTriangleInternal(const Shader::OutputVertex& v0, const Shader
 
                     case AlphaModifier::OneMinusSourceBlue:
                         return 255 - values.b();
+
+                    default:
+                        UNREACHABLE();
+                        return 0;
                     }
                 };
 
@@ -958,8 +966,9 @@ static void ProcessTriangleInternal(const Shader::OutputVertex& v0, const Shader
                 u8 new_stencil =
                     PerformStencilAction(action, old_stencil, stencil_test.reference_value);
                 if (g_state.regs.framebuffer.allow_depth_stencil_write != 0)
-                    SetStencil(x >> 4, y >> 4, (new_stencil & stencil_test.write_mask) |
-                                                   (old_stencil & ~stencil_test.write_mask));
+                    SetStencil(x >> 4, y >> 4,
+                               (new_stencil & stencil_test.write_mask) |
+                                   (old_stencil & ~stencil_test.write_mask));
             };
 
             if (stencil_action_enable) {
@@ -1253,6 +1262,10 @@ static void ProcessTriangleInternal(const Shader::OutputVertex& v0, const Shader
 
                     case Regs::LogicOp::OrInverted:
                         return ~src | dest;
+
+                    default:
+                        UNREACHABLE();
+                        return 0;
                     }
                 };
 
