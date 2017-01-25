@@ -99,6 +99,7 @@ public:
         case HandleType::CodeSet:
         case HandleType::ClientPort:
         case HandleType::ClientSession:
+        default:
             return false;
         }
     }
