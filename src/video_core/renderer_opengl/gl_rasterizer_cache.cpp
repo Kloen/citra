@@ -767,7 +767,8 @@ void RasterizerCacheOpenGL::FlushRegion(PAddr addr, size_t size, const CachedSur
     // Gather up unique surfaces that touch the region
     std::unordered_set<std::shared_ptr<CachedSurface>> touching_surfaces;
 
-    auto surface_interval = boost::icl::interval<PAddr>::right_open(addr, addr + size);
+    auto surface_interval =
+        boost::icl::interval<PAddr>::right_open(addr, static_cast<PAddr>(addr + size));
     auto cache_upper_bound = surface_cache.upper_bound(surface_interval);
     for (auto it = surface_cache.lower_bound(surface_interval); it != cache_upper_bound; ++it) {
         std::copy_if(it->second.begin(), it->second.end(),
