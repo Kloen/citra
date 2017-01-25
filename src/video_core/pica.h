@@ -40,7 +40,7 @@ namespace Pica {
 //       field offset. Otherwise, the compiler will fail to compile this code.
 #define PICA_REG_INDEX_WORKAROUND(field_name, backup_workaround_index)                             \
     ((typename std::enable_if<backup_workaround_index == PICA_REG_INDEX(field_name),               \
-                              size_t>::type)PICA_REG_INDEX(field_name))
+                              size_t>::type) PICA_REG_INDEX(field_name))
 #endif // _MSC_VER
 
 struct Regs {
@@ -707,6 +707,7 @@ struct Regs {
         default:
             LOG_CRITICAL(HW_GPU, "Unknown depth format %u", format);
             UNIMPLEMENTED();
+            return 0;
         }
     }
 
@@ -721,6 +722,7 @@ struct Regs {
         default:
             LOG_CRITICAL(HW_GPU, "Unknown depth format %u", format);
             UNIMPLEMENTED();
+            return 0;
         }
     }
 
