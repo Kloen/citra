@@ -2,6 +2,7 @@
 // Licensed under GPLv2 or any later version
 // Refer to the license.txt file included.
 
+#include <QKeySequence>
 #include <QSettings>
 #include "citra_qt/configuration/config.h"
 #include "citra_qt/ui_settings.h"
@@ -157,22 +158,57 @@ void Config::ReadValues() {
     qt_config->endGroup();
 
     qt_config->beginGroup("Shortcuts");
-    QStringList groups = qt_config->childGroups();
-    for (auto group : groups) {
-        qt_config->beginGroup(group);
-
-        QStringList hotkeys = qt_config->childGroups();
-        for (auto hotkey : hotkeys) {
-            qt_config->beginGroup(hotkey);
-            UISettings::values.shortcuts.emplace_back(UISettings::Shortcut(
-                group + "/" + hotkey,
-                UISettings::ContextualShortcut(qt_config->value("KeySeq").toString(),
-                                               qt_config->value("Context").toInt())));
-            qt_config->endGroup();
-        }
-
-        qt_config->endGroup();
-    }
+    qt_config->beginGroup("Main Window");
+    qt_config->beginGroup("Load File");
+    UISettings::values.shortcuts.emplace_back(UISettings::Shortcut(
+        "Main Window/Load File",
+        UISettings::ContextualShortcut(
+            qt_config->value("KeySeq", QKeySequence(Qt::CTRL + Qt::Key_O).toString()).toString(),
+            qt_config->value("Context", 1).toInt())));
+    qt_config->endGroup();
+    qt_config->beginGroup("Exit Citra");
+    UISettings::values.shortcuts.emplace_back(UISettings::Shortcut(
+        "Main Window/Exit Citra",
+        UISettings::ContextualShortcut(
+            qt_config->value("KeySeq", QKeySequence(Qt::CTRL + Qt::Key_Q).toString()).toString(),
+            qt_config->value("Context", 2).toInt())));
+    qt_config->endGroup();
+    qt_config->beginGroup("Start Emulation");
+    UISettings::values.shortcuts.emplace_back(UISettings::Shortcut(
+        "Main Window/Start Emulation",
+        UISettings::ContextualShortcut(
+            qt_config->value("KeySeq", QKeySequence(Qt::Key_F5).toString()).toString(),
+            qt_config->value("Context", 1).toInt())));
+    qt_config->endGroup();
+    qt_config->beginGroup("Pause Emulation");
+    UISettings::values.shortcuts.emplace_back(UISettings::Shortcut(
+        "Main Window/Pause Emulation",
+        UISettings::ContextualShortcut(
+            qt_config->value("KeySeq", QKeySequence(Qt::Key_F6).toString()).toString(),
+            qt_config->value("Context", 1).toInt())));
+    qt_config->endGroup();
+    qt_config->beginGroup("Stop Emulation");
+    UISettings::values.shortcuts.emplace_back(UISettings::Shortcut(
+        "Main Window/Stop Emulation",
+        UISettings::ContextualShortcut(
+            qt_config->value("KeySeq", QKeySequence(Qt::Key_F7).toString()).toString(),
+            qt_config->value("Context", 1).toInt())));
+    qt_config->endGroup();
+    qt_config->beginGroup("Swap Screens");
+    UISettings::values.shortcuts.emplace_back(UISettings::Shortcut(
+        "Main Window/Swap Screens",
+        UISettings::ContextualShortcut(
+            qt_config->value("KeySeq", QKeySequence(Qt::CTRL + Qt::Key_Tab).toString()).toString(),
+            qt_config->value("Context", 1).toInt())));
+    qt_config->endGroup();
+    qt_config->beginGroup("Toggle Filter Bar");
+    UISettings::values.shortcuts.emplace_back(UISettings::Shortcut(
+        "Main Window/Toggle Filter Bar",
+        UISettings::ContextualShortcut(
+            qt_config->value("KeySeq", QKeySequence(Qt::CTRL + Qt::Key_F).toString()).toString(),
+            qt_config->value("Context", 1).toInt())));
+    qt_config->endGroup();
+    qt_config->endGroup();
     qt_config->endGroup();
 
     UISettings::values.single_window_mode = qt_config->value("singleWindowMode", true).toBool();
