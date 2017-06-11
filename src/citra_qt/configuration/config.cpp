@@ -208,6 +208,13 @@ void Config::ReadValues() {
             qt_config->value("KeySeq", QKeySequence(Qt::CTRL + Qt::Key_F).toString()).toString(),
             qt_config->value("Context", 1).toInt())));
     qt_config->endGroup();
+    qt_config->beginGroup("Toggle Status Bar");
+    UISettings::values.shortcuts.emplace_back(UISettings::Shortcut(
+        "Main Window/Toggle Status Bar",
+        UISettings::ContextualShortcut(
+            qt_config->value("KeySeq", QKeySequence(Qt::CTRL + Qt::Key_S).toString()).toString(),
+            qt_config->value("Context", 1).toInt())));
+    qt_config->endGroup();
     qt_config->endGroup();
     qt_config->endGroup();
 
