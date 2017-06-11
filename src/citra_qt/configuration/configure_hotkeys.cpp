@@ -29,6 +29,9 @@ ConfigureHotkeys::ConfigureHotkeys(QWidget* parent)
         for (auto hotkey : group.second) {
             QStandardItem* action = new QStandardItem(hotkey.first);
             QStandardItem* keyseq = new QStandardItem(hotkey.second.keyseq.toString());
+            if (keyseq->text() == "") {
+                keyseq->setText("-");
+            }
             action->setEditable(false);
             keyseq->setEditable(false);
             parent_item->appendRow({action, keyseq});
