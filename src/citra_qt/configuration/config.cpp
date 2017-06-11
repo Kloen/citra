@@ -225,6 +225,15 @@ void Config::ReadValues() {
             qt_config->value("Context", 1).toInt())));
     qt_config->endGroup();
     qt_config->endGroup();
+    qt_config->beginGroup("Pica Vertex Shader");
+    qt_config->beginGroup("Dump");
+    UISettings::values.shortcuts.emplace_back(UISettings::Shortcut(
+        "Pica Vertex Shader/Dump",
+        UISettings::ContextualShortcut(
+            qt_config->value("KeySeq", QKeySequence(Qt::CTRL + Qt::Key_D).toString()).toString(),
+            qt_config->value("Context", 1).toInt())));
+    qt_config->endGroup();
+    qt_config->endGroup();
     qt_config->beginGroup("Pica Command List");
     qt_config->beginGroup("Toggle Tracing");
     UISettings::values.shortcuts.emplace_back(UISettings::Shortcut(
