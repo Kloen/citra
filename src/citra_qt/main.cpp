@@ -54,6 +54,8 @@ GMainWindow::GMainWindow() : config(new Config()), emu_thread(nullptr) {
     ui.setupUi(this);
     statusBar()->hide();
 
+    LoadHotkeys();
+
     InitializeWidgets();
     InitializeDebugWidgets();
     InitializeRecentFileMenuActions();
@@ -195,8 +197,6 @@ void GMainWindow::InitializeRecentFileMenuActions() {
 }
 
 void GMainWindow::InitializeHotkeys() {
-    LoadHotkeys();
-
     connect(GetHotkey("Main Window", "Swap Screens", render_window), SIGNAL(activated()), this,
             SLOT(OnSwapScreens()));
 
