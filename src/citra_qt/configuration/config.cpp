@@ -216,6 +216,15 @@ void Config::ReadValues() {
             qt_config->value("Context", 1).toInt())));
     qt_config->endGroup();
     qt_config->endGroup();
+    qt_config->beginGroup("Pica Breakpoints");
+    qt_config->beginGroup("Resume");
+    UISettings::values.shortcuts.emplace_back(UISettings::Shortcut(
+        "Pica Breakpoints/Resume",
+        UISettings::ContextualShortcut(
+            qt_config->value("KeySeq", QKeySequence(Qt::Key_F4).toString()).toString(),
+            qt_config->value("Context", 1).toInt())));
+    qt_config->endGroup();
+    qt_config->endGroup();
     qt_config->endGroup();
 
     UISettings::values.single_window_mode = qt_config->value("singleWindowMode", true).toBool();
