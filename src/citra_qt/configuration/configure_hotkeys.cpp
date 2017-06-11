@@ -76,6 +76,11 @@ bool ConfigureHotkeys::eventFilter(QObject* o, QEvent* e) {
             if (index.row() != row && index.column() == 1) {
                 QKeyEvent* key = static_cast<QKeyEvent*>(e);
                 if (key->key() == Qt::Key_Control) {
+                    if (timer->isActive() && last_index != index) {
+                        QStandardItemModel* model = (QStandardItemModel*)ui->treeView->model();
+                        model->setData(last_index, last_index_value);
+                        timer->stop();
+                    }
                     last_index = index;
                     last_index_value = model->data(last_index);
                     timer->start(2000); // Cancel after 2 seconds
@@ -165,6 +170,12 @@ bool ConfigureHotkeys::isUsedKey(QKeySequence key_sequence) {
 }
 
 void ConfigureHotkeys::applyConfiguration() {
+    if (timer->isActive()) {
+        QStandardItemModel* model = (QStandardItemModel*)ui->treeView->model();
+        model->setData(last_index, last_index_value);
+        timer->stop();
+    }
+
     QStandardItemModel* model = (QStandardItemModel*)ui->treeView->model();
     for (int r = 0; r < model->rowCount(); r++) {
         QStandardItem* parent = model->item(r, 0);
