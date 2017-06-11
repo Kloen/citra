@@ -241,6 +241,29 @@ void Config::ReadValues() {
             qt_config->value("Context", 1).toInt())));
     qt_config->endGroup();
     qt_config->endGroup();
+    qt_config->beginGroup("CiTrace Recorder");
+    qt_config->beginGroup("Start Recording");
+    UISettings::values.shortcuts.emplace_back(UISettings::Shortcut(
+        "CiTrace Recorder/Start Recording",
+        UISettings::ContextualShortcut(
+            qt_config->value("KeySeq", QKeySequence(Qt::Key_F2).toString()).toString(),
+            qt_config->value("Context", 1).toInt())));
+    qt_config->endGroup();
+    qt_config->beginGroup("Stop Recording");
+    UISettings::values.shortcuts.emplace_back(UISettings::Shortcut(
+        "CiTrace Recorder/Stop Recording",
+        UISettings::ContextualShortcut(
+            qt_config->value("KeySeq", QKeySequence(Qt::Key_F3).toString()).toString(),
+            qt_config->value("Context", 1).toInt())));
+    qt_config->endGroup();
+    qt_config->beginGroup("Abort Recording");
+    UISettings::values.shortcuts.emplace_back(UISettings::Shortcut(
+        "CiTrace Recorder/Abort Recording",
+        UISettings::ContextualShortcut(
+            qt_config->value("KeySeq", QKeySequence(Qt::CTRL + Qt::Key_A).toString()).toString(),
+            qt_config->value("Context", 1).toInt())));
+    qt_config->endGroup();
+    qt_config->endGroup();
     qt_config->endGroup();
 
     UISettings::values.single_window_mode = qt_config->value("singleWindowMode", true).toBool();
