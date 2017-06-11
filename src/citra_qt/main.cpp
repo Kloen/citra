@@ -218,6 +218,10 @@ void GMainWindow::InitializeHotkeys() {
     ui.action_Show_Filter_Bar->setShortcut(GetKeySequence("Main Window", "Toggle Filter Bar"));
     ui.action_Show_Filter_Bar->setShortcutContext(
         GetShortcutContext("Main Window", "Toggle Filter Bar"));
+
+    ui.action_Show_Status_Bar->setShortcut(GetKeySequence("Main Window", "Toggle Status Bar"));
+    ui.action_Show_Status_Bar->setShortcutContext(
+        GetShortcutContext("Main Window", "Toggle Status Bar"));
 }
 
 void GMainWindow::SetDefaultUIGeometry() {
