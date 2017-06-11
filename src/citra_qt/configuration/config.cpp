@@ -225,6 +225,22 @@ void Config::ReadValues() {
             qt_config->value("Context", 1).toInt())));
     qt_config->endGroup();
     qt_config->endGroup();
+    qt_config->beginGroup("Pica Command List");
+    qt_config->beginGroup("Toggle Tracing");
+    UISettings::values.shortcuts.emplace_back(UISettings::Shortcut(
+        "Pica Command List/Toggle Tracing",
+        UISettings::ContextualShortcut(
+            qt_config->value("KeySeq", QKeySequence(Qt::Key_F1).toString()).toString(),
+            qt_config->value("Context", 1).toInt())));
+    qt_config->endGroup();
+    qt_config->beginGroup("Copy All");
+    UISettings::values.shortcuts.emplace_back(UISettings::Shortcut(
+        "Pica Command List/Copy All",
+        UISettings::ContextualShortcut(
+            qt_config->value("KeySeq", QKeySequence(Qt::CTRL + Qt::Key_C).toString()).toString(),
+            qt_config->value("Context", 1).toInt())));
+    qt_config->endGroup();
+    qt_config->endGroup();
     qt_config->endGroup();
 
     UISettings::values.single_window_mode = qt_config->value("singleWindowMode", true).toBool();
