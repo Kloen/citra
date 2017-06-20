@@ -87,15 +87,15 @@ bool ConfigureHotkeys::eventFilter(QObject* o, QEvent* e) {
                         model->setData(last_index, last_index_value);
                         timer->stop();
                     }
-                    last_key = key->key();
+                    last_key = key;
                     last_index = index;
                     last_index_value = model->data(last_index);
                     timer->start(2000); // Cancel after 2 seconds
                     model->setData(index, tr("Press another key (2sec)"));
                 } else if (timer->isActive()) {
                     timer->stop();
-                    if (!isUsedKey(QKeySequence(last_key + key->key()))) {
-                        model->setData(last_index, QKeySequence(last_key + key->key()).toString());
+                    if (!isUsedKey(QKeySequence(last_key->key() + key->key()))) {
+                        model->setData(last_index, QKeySequence(last_key->key() + key->key()).toString());
                     }
                 } else {
                     if (!isUsedKey(QKeySequence(key->key()))) {

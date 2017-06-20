@@ -41,7 +41,7 @@ private:
 
     QVariant last_index_value;
 
-    int last_key;
+    QKeyEvent* last_key;
 
     bool eventFilter(QObject* o, QEvent* e);
 
