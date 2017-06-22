@@ -54,6 +54,8 @@ GMainWindow::GMainWindow() : config(new Config()), emu_thread(nullptr) {
     ui.setupUi(this);
     statusBar()->hide();
 
+    LoadHotkeys();
+
     InitializeWidgets();
     InitializeDebugWidgets();
     InitializeRecentFileMenuActions();
@@ -209,17 +211,31 @@ void GMainWindow::InitializeRecentFileMenuActions() {
 }
 
 void GMainWindow::InitializeHotkeys() {
-    RegisterHotkey("Main Window", "Load File", QKeySequence::Open);
-    RegisterHotkey("Main Window", "Swap Screens", QKeySequence::NextChild);
-    RegisterHotkey("Main Window", "Start Emulation");
-    LoadHotkeys();
-
-    connect(GetHotkey("Main Window", "Load File", this), SIGNAL(activated()), this,
-            SLOT(OnMenuLoadFile()));
-    connect(GetHotkey("Main Window", "Start Emulation", this), SIGNAL(activated()), this,
-            SLOT(OnStartGame()));
     connect(GetHotkey("Main Window", "Swap Screens", render_window), SIGNAL(activated()), this,
             SLOT(OnSwapScreens()));
+
+    ui.action_Load_File->setShortcut(GetKeySequence("Main Window", "Load File"));
+    ui.action_Load_File->setShortcutContext(GetShortcutContext("Main Window", "Load File"));
+
+    ui.action_Exit->setShortcut(GetKeySequence("Main Window", "Exit Citra"));
+    ui.action_Exit->setShortcutContext(GetShortcutContext("Main Window", "Exit Citra"));
+
+    ui.action_Start->setShortcut(GetKeySequence("Main Window", "Start Emulation"));
+    ui.action_Start->setShortcutContext(GetShortcutContext("Main Window", "Start Emulation"));
+
+    ui.action_Pause->setShortcut(GetKeySequence("Main Window", "Pause Emulation"));
+    ui.action_Pause->setShortcutContext(GetShortcutContext("Main Window", "Pause Emulation"));
+
+    ui.action_Stop->setShortcut(GetKeySequence("Main Window", "Stop Emulation"));
+    ui.action_Stop->setShortcutContext(GetShortcutContext("Main Window", "Stop Emulation"));
+
+    ui.action_Show_Filter_Bar->setShortcut(GetKeySequence("Main Window", "Toggle Filter Bar"));
+    ui.action_Show_Filter_Bar->setShortcutContext(
+        GetShortcutContext("Main Window", "Toggle Filter Bar"));
+
+    ui.action_Show_Status_Bar->setShortcut(GetKeySequence("Main Window", "Toggle Status Bar"));
+    ui.action_Show_Status_Bar->setShortcutContext(
+        GetShortcutContext("Main Window", "Toggle Status Bar"));
 }
 
 void GMainWindow::SetDefaultUIGeometry() {
@@ -288,7 +304,6 @@ void GMainWindow::ConnectMenuEvents() {
             &GMainWindow::ToggleWindowMode);
     connect(ui.action_Display_Dock_Widget_Headers, &QAction::triggered, this,
             &GMainWindow::OnDisplayTitleBars);
-    ui.action_Show_Filter_Bar->setShortcut(tr("CTRL+F"));
     connect(ui.action_Show_Filter_Bar, &QAction::triggered, this, &GMainWindow::OnToggleFilterBar);
     connect(ui.action_Show_Status_Bar, &QAction::triggered, statusBar(), &QStatusBar::setVisible);
 }

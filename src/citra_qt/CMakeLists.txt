@@ -10,6 +10,7 @@ set(SRCS
             configuration/configure_dialog.cpp
             configuration/configure_general.cpp
             configuration/configure_graphics.cpp
+            configuration/configure_hotkeys.cpp
             configuration/configure_input.cpp
             configuration/configure_system.cpp
             debugger/graphics/graphics.cpp
@@ -40,6 +41,7 @@ set(HEADERS
             configuration/configure_dialog.h
             configuration/configure_general.h
             configuration/configure_graphics.h
+            configuration/configure_hotkeys.h
             configuration/configure_input.h
             configuration/configure_system.h
             debugger/graphics/graphics.h
@@ -69,10 +71,10 @@ set(UIS
             configuration/configure_debug.ui
             configuration/configure_general.ui
             configuration/configure_graphics.ui
+            configuration/configure_hotkeys.ui
             configuration/configure_input.ui
             configuration/configure_system.ui
             debugger/registers.ui
-            hotkeys.ui
             main.ui
             )
 

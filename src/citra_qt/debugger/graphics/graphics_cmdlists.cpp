@@ -14,6 +14,7 @@
 #include <QTreeView>
 #include <QVBoxLayout>
 #include "citra_qt/debugger/graphics/graphics_cmdlists.h"
+#include "citra_qt/hotkeys.h"
 #include "citra_qt/util/spinbox.h"
 #include "citra_qt/util/util.h"
 #include "common/vector_math.h"
@@ -205,8 +206,14 @@ GPUCommandListWidget::GPUCommandListWidget(QWidget* parent)
     connect(list_widget, SIGNAL(doubleClicked(const QModelIndex&)), this,
             SLOT(OnCommandDoubleClicked(const QModelIndex&)));
 
-    toggle_tracing = new QPushButton(tr("Start Tracing"));
-    QPushButton* copy_all = new QPushButton(tr("Copy All"));
+    toggle_tracing = new QPushButton(
+        tr("Start Tracing") +
+        QString(" (" + GetKeySequence("Pica Command List", "Toggle Tracing").toString() + ")"));
+    toggle_tracing->setShortcut(GetKeySequence("Pica Command List", "Toggle Tracing"));
+    QPushButton* copy_all = new QPushButton(
+        tr("Copy All") +
+        QString(" (" + GetKeySequence("Pica Command List", "Copy All").toString() + ")"));
+    copy_all->setShortcut(GetKeySequence("Pica Command List", "Copy All"));
 
     connect(toggle_tracing, SIGNAL(clicked()), this, SLOT(OnToggleTracing()));
     connect(this, SIGNAL(TracingFinished(const Pica::DebugUtils::PicaTrace&)), model,
@@ -232,11 +239,15 @@ GPUCommandListWidget::GPUCommandListWidget(QWidget* parent)
 void GPUCommandListWidget::OnToggleTracing() {
     if (!Pica::DebugUtils::IsPicaTracing()) {
         Pica::DebugUtils::StartPicaTracing();
-        toggle_tracing->setText(tr("Finish Tracing"));
+        toggle_tracing->setText(
+            tr("Finish Tracing") +
+            QString(" (" + GetKeySequence("Pica Command List", "Toggle Tracing").toString() + ")"));
     } else {
         pica_trace = Pica::DebugUtils::FinishPicaTracing();
         emit TracingFinished(*pica_trace);
-        toggle_tracing->setText(tr("Start Tracing"));
+        toggle_tracing->setText(
+            tr("Start Tracing") +
+            QString(" (" + GetKeySequence("Pica Command List", "Toggle Tracing").toString() + ")"));
     }
 }
 
