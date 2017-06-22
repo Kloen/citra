@@ -1,4 +1,5 @@
 set(CMAKE_AUTOMOC ON)
+set(CMAKE_AUTORCC ON)
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${PROJECT_SOURCE_DIR}/CMakeModules)
 
@@ -75,7 +76,52 @@ set(UIS
             main.ui
             )
 
-create_directory_groups(${SRCS} ${HEADERS} ${UIS})
+set(STYLES
+            qdarkstyle/style.qss
+            qdarkstyle/style.qrc
+            qdarkstyle/rc/branch_closed.png
+            qdarkstyle/rc/branch_closed-on.png
+            qdarkstyle/rc/branch_open.png
+            qdarkstyle/rc/branch_open-on.png
+            qdarkstyle/rc/checkbox_checked.png
+            qdarkstyle/rc/checkbox_checked_disabled.png
+            qdarkstyle/rc/checkbox_checked_focus.png
+            qdarkstyle/rc/checkbox_indeterminate.png
+            qdarkstyle/rc/checkbox_indeterminate_disabled.png
+            qdarkstyle/rc/checkbox_indeterminate_focus.png
+            qdarkstyle/rc/checkbox_unchecked.png
+            qdarkstyle/rc/checkbox_unchecked_disabled.png
+            qdarkstyle/rc/checkbox_unchecked_focus.png
+            qdarkstyle/rc/close.png
+            qdarkstyle/rc/close-hover.png
+            qdarkstyle/rc/close-pressed.png
+            qdarkstyle/rc/down_arrow.png
+            qdarkstyle/rc/down_arrow_disabled.png
+            qdarkstyle/rc/Hmovetoolbar.png
+            qdarkstyle/rc/Hsepartoolbar.png
+            qdarkstyle/rc/left_arrow.png
+            qdarkstyle/rc/left_arrow_disabled.png
+            qdarkstyle/rc/radio_checked.png
+            qdarkstyle/rc/radio_checked_disabled.png
+            qdarkstyle/rc/radio_checked_focus.png
+            qdarkstyle/rc/radio_unchecked.png
+            qdarkstyle/rc/radio_unchecked_disabled.png
+            qdarkstyle/rc/radio_unchecked_focus.png
+            qdarkstyle/rc/right_arrow.png
+            qdarkstyle/rc/right_arrow_disabled.png
+            qdarkstyle/rc/sizegrip.png
+            qdarkstyle/rc/stylesheet-branch-end.png
+            qdarkstyle/rc/stylesheet-branch-more.png
+            qdarkstyle/rc/stylesheet-vline.png
+            qdarkstyle/rc/transparent.png
+            qdarkstyle/rc/undock.png
+            qdarkstyle/rc/up_arrow.png
+            qdarkstyle/rc/up_arrow_disabled.png
+            qdarkstyle/rc/Vmovetoolbar.png
+            qdarkstyle/rc/Vsepartoolbar.png
+            )
+
+create_directory_groups(${SRCS} ${HEADERS} ${UIS} ${STYLES})
 
 if (Qt5_FOUND)
     qt5_wrap_ui(UI_HDRS ${UIS})
@@ -89,7 +135,7 @@ if (APPLE)
     add_executable(citra-qt MACOSX_BUNDLE ${SRCS} ${HEADERS} ${UI_HDRS} ${MACOSX_ICON})
     set_target_properties(citra-qt PROPERTIES MACOSX_BUNDLE_INFO_PLIST ${CMAKE_CURRENT_SOURCE_DIR}/Info.plist)
 else()
-    add_executable(citra-qt ${SRCS} ${HEADERS} ${UI_HDRS})
+    add_executable(citra-qt ${SRCS} ${HEADERS} ${UI_HDRS} ${STYLES})
 endif()
 target_link_libraries(citra-qt PRIVATE audio_core common core input_common video_core)
 target_link_libraries(citra-qt PRIVATE Boost::boost glad nihstro-headers Qt5::OpenGL Qt5::Widgets)

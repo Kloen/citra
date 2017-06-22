@@ -71,10 +71,24 @@ GMainWindow::GMainWindow() : config(new Config()), emu_thread(nullptr) {
 
     game_list->PopulateAsync(UISettings::values.gamedir, UISettings::values.gamedir_deepscan);
 
+    QFile f(":qdarkstyle/style.qss");
+    if (!f.exists())
+    {
+        printf("Unable to set stylesheet, file not found\n");
+    }
+    else
+    {
+        f.open(QFile::ReadOnly | QFile::Text);
+        QTextStream ts(&f);
+        qApp->setStyleSheet(ts.readAll());
+        GMainWindow::setStyleSheet(ts.readAll());
+    }
+
     QStringList args = QApplication::arguments();
     if (args.length() >= 2) {
         BootGame(args[1]);
     }
+
 }
 
 GMainWindow::~GMainWindow() {
