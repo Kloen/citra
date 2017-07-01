@@ -17,6 +17,16 @@ if(NOT EXISTS ${CMAKE_SOURCE_DIR}/.git/hooks/pre-commit)
         DESTINATION ${CMAKE_SOURCE_DIR}/.git/hooks)
 endif()
 
+configure_file(${CMAKE_SOURCE_DIR}/dist/compatibility_list/compatibility_list.qrc
+               ${CMAKE_BINARY_DIR}/dist/compatibility_list/compatibility_list.qrc
+               COPYONLY)
+
+if (NOT EXISTS ${CMAKE_BINARY_DIR}/dist/compatibility_list/compatibility_list.json)
+    message(STATUS "Downloading compatibility list for citra...")
+    file(DOWNLOAD
+        https://citra-emu.org/game/index.json
+        "${CMAKE_BINARY_DIR}/dist/compatibility_list/compatibility_list.json" SHOW_PROGRESS)
+endif()
 
 # Detect current compilation architecture and create standard definitions
 # =======================================================================

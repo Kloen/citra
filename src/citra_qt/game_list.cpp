@@ -2,9 +2,12 @@
 // Licensed under GPLv2 or any later version
 // Refer to the license.txt file included.
 
+#include <cinttypes>
 #include <QApplication>
 #include <QFileInfo>
 #include <QHeaderView>
+#include <QJsonDocument>
+#include <QJsonObject>
 #include <QKeyEvent>
 #include <QMenu>
 #include <QThreadPool>
@@ -147,6 +150,33 @@ bool GameList::containsAllWords(QString haystack, QString userinput) {
                        [haystack](QString s) { return haystack.contains(s); });
 }
 
+QString GameList::GetReadableCompatibility(QString compat) {
+    int c = compat.toInt();
+    switch (c) {
+    case 0:
+        return QString("Perfect");
+        break;
+    case 1:
+        return QString("Great");
+        break;
+    case 2:
+        return QString("Okay");
+        break;
+    case 3:
+        return QString("Bad");
+        break;
+    case 4:
+        return QString("Intro/Menu");
+        break;
+    case 5:
+        return QString("Won't Boot");
+        break;
+    default:
+        return QString("Not Tested");
+        break;
+    }
+}
+
 // Event in order to filter the gamelist after editing the searchfield
 void GameList::onTextChanged(const QString& newText) {
     int rowCount = tree_view->model()->rowCount();
@@ -217,6 +247,7 @@ GameList::GameList(GMainWindow* parent) : QWidget{parent} {
 
     item_model->insertColumns(0, COLUMN_COUNT);
     item_model->setHeaderData(COLUMN_NAME, Qt::Horizontal, "Name");
+    item_model->setHeaderData(COLUMN_COMPATIBILITY, Qt::Horizontal, "Compatibility");
     item_model->setHeaderData(COLUMN_FILE_TYPE, Qt::Horizontal, "File type");
     item_model->setHeaderData(COLUMN_SIZE, Qt::Horizontal, "Size");
 
@@ -313,6 +344,27 @@ void GameList::PopupContextMenu(const QPoint& menu_location) {
     context_menu.exec(tree_view->viewport()->mapToGlobal(menu_location));
 }
 
+void GameList::LoadCompatibilityList() {
+    QString content;
+    QFile file(":compatibility_list/compatibility_list.json");
+    if (!file.exists()) {
+        LOG_ERROR(Frontend,
+                  "Unable to load game compatibility list, compatibility list file not found");
+    } else {
+        file.open(QFile::ReadOnly | QFile::Text);
+        content = file.readAll();
+        file.close();
+        QJsonDocument json = QJsonDocument::fromJson(content.toUtf8());
+        QJsonObject list = json.object();
+        QStringList game_ids = list.keys();
+        for (QString id : game_ids) {
+            QJsonObject game = list[id].toObject();
+            QString compatibility = GetReadableCompatibility(game["compatibility"].toString());
+            compatibility_list.push_back(std::make_pair(id.toUpper().toStdString(), compatibility));
+        }
+    }
+}
+
 void GameList::PopulateAsync(const QString& dir_path, bool deep_scan) {
     if (!FileUtil::Exists(dir_path.toStdString()) ||
         !FileUtil::IsDirectory(dir_path.toStdString())) {
@@ -327,7 +379,7 @@ void GameList::PopulateAsync(const QString& dir_path, bool deep_scan) {
 
     emit ShouldCancelWorker();
 
-    GameListWorker* worker = new GameListWorker(dir_path, deep_scan);
+    GameListWorker* worker = new GameListWorker(dir_path, deep_scan, compatibility_list);
 
     connect(worker, &GameListWorker::EntryReady, this, &GameList::AddEntry, Qt::QueuedConnection);
     connect(worker, &GameListWorker::Finished, this, &GameList::DonePopulating,
@@ -392,8 +444,20 @@ void GameListWorker::AddFstEntriesToGameList(const std::string& dir_path, unsign
             u64 program_id = 0;
             loader->ReadProgramId(program_id);
 
+            auto it = std::find_if(compatibility_list.begin(), compatibility_list.end(),
+                                   [program_id](const std::pair<std::string, QString>& element) {
+                                       char pid[16];
+                                       sprintf(pid, "%016" PRIX64, program_id);
+                                       return element.first == pid;
+                                   });
+
+            QString compatibility("Not Tested");
+            if (it != compatibility_list.end())
+                compatibility = it->second;
+
             emit EntryReady({
                 new GameListItemPath(QString::fromStdString(physical_name), smdh, program_id),
+                new GameListItem(compatibility),
                 new GameListItem(
                     QString::fromStdString(Loader::GetFileTypeString(loader->GetFileType()))),
                 new GameListItemSize(FileUtil::GetSize(physical_name)),

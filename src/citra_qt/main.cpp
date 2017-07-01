@@ -69,6 +69,7 @@ GMainWindow::GMainWindow() : config(new Config()), emu_thread(nullptr) {
                        .arg(Common::g_build_name, Common::g_scm_branch, Common::g_scm_desc));
     show();
 
+    game_list->LoadCompatibilityList();
     game_list->PopulateAsync(UISettings::values.gamedir, UISettings::values.gamedir_deepscan);
 
     QStringList args = QApplication::arguments();
