@@ -51,6 +51,22 @@ void RegisterHotkey(const QString& group, const QString& action,
 QShortcut* GetHotkey(const QString& group, const QString& action, QWidget* widget);
 
 /**
+ * Returns a QKeySequence object who signal can be connected to QAction->SetShortcut.
+ *
+ * @param group  General group this hotkey belongs to (e.g. "Main Window", "Debugger").
+ * @param action Name of the action (e.g. "Start Emulation", "Load Image").
+ */
+QKeySequence GetKeySequence(const QString& group, const QString& action);
+
+/**
+ * Returns a Qt::ShortcutContext object who can be connected to other QAction->SetShortcutContext.
+ *
+ * @param group  General group this shortcutcontext belongs to (e.g. "Main Window", "Debugger").
+ * @param action Name of the action (e.g. "Start Emulation", "Load Image").
+ */
+Qt::ShortcutContext GetShortcutContext(const QString& group, const QString& action);
+
+/**
  * Saves all registered hotkeys to the settings file.
  *
  * @note Each hotkey group will be stored a settings group; For each hotkey inside that group, a

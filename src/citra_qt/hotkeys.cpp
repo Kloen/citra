@@ -56,3 +56,13 @@ QShortcut* GetHotkey(const QString& group, const QString& action, QWidget* widge
 
     return hk.shortcut;
 }
+
+QKeySequence GetKeySequence(const QString& group, const QString& action) {
+    Hotkey& hk = hotkey_groups[group][action];
+    return hk.keyseq;
+}
+
+Qt::ShortcutContext GetShortcutContext(const QString& group, const QString& action) {
+    Hotkey& hk = hotkey_groups[group][action];
+    return hk.context;
+}
