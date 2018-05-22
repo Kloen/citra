@@ -215,7 +215,7 @@ void Config::ReadValues() {
     UISettings::values.shortcuts.emplace_back(UISettings::Shortcut(
             "Main Window/Load File",
             UISettings::ContextualShortcut(
-                    qt_config->value("KeySeq", QKeySequence(Qt::CTRL + Qt::Key_O).toString()).toString(),
+                    qt_config->value("KeySeq", QKeySequence::Open).toString(),
                     qt_config->value("Context", 1).toInt())));
     qt_config->endGroup();
     qt_config->beginGroup("Exit Citra");
@@ -250,7 +250,7 @@ void Config::ReadValues() {
     UISettings::values.shortcuts.emplace_back(UISettings::Shortcut(
             "Main Window/Swap Screens",
             UISettings::ContextualShortcut(
-                    qt_config->value("KeySeq", QKeySequence(Qt::CTRL + Qt::Key_Tab).toString()).toString(),
+                    qt_config->value("KeySeq", QKeySequence(Qt::Key_F9).toString()).toString(),
                     qt_config->value("Context", 1).toInt())));
     qt_config->endGroup();
     qt_config->beginGroup("Toggle Filter Bar");
@@ -285,7 +285,7 @@ void Config::ReadValues() {
     UISettings::values.shortcuts.emplace_back(UISettings::Shortcut(
             "Main Window/Fullscreen",
             UISettings::ContextualShortcut(
-                    qt_config->value("KeySeq", QKeySequence(Qt::Key_F11).toString()).toString(),
+                    qt_config->value("KeySeq", QKeySequence::FullScreen).toString(),
                     qt_config->value("Context", 1).toInt())));
     qt_config->endGroup();
     qt_config->beginGroup("Exit Fullscreen");
