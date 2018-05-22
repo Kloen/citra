@@ -116,7 +116,6 @@ set(UIS
     multiplayer/client_room.ui
     multiplayer/host_room.ui
     aboutdialog.ui
-    hotkeys.ui
     main.ui
     compatdb.ui
 )
