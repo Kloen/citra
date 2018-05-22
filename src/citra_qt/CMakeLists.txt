@@ -32,6 +32,8 @@ add_executable(citra-qt
     configuration/configure_general.h
     configuration/configure_graphics.cpp
     configuration/configure_graphics.h
+    configuration/configure_hotkeys.cpp
+    configuration/configure_hotkeys.h
     configuration/configure_input.cpp
     configuration/configure_input.h
     configuration/configure_system.cpp
@@ -106,6 +108,7 @@ set(UIS
     configuration/configure_debug.ui
     configuration/configure_general.ui
     configuration/configure_graphics.ui
+    configuration/configure_hotkeys.ui
     configuration/configure_input.ui
     configuration/configure_system.ui
     configuration/configure_web.ui

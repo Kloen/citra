@@ -2,25 +2,13 @@
 // Licensed under GPLv2 or any later version
 // Refer to the license.txt file included.
 
-#include <map>
 #include <QKeySequence>
 #include <QShortcut>
 #include <QtGlobal>
 #include "citra_qt/hotkeys.h"
 #include "citra_qt/ui_settings.h"
 
-struct Hotkey {
-    Hotkey() : shortcut(nullptr), context(Qt::WindowShortcut) {}
-
-    QKeySequence keyseq;
-    QShortcut* shortcut;
-    Qt::ShortcutContext context;
-};
-
-typedef std::map<QString, Hotkey> HotkeyMap;
-typedef std::map<QString, HotkeyMap> HotkeyGroupMap;
-
-HotkeyGroupMap hotkey_groups;
+HotkeyGroupMap hotkey_groups = {};
 
 void SaveHotkeys() {
     UISettings::values.shortcuts.clear();
@@ -67,24 +55,4 @@ QShortcut* GetHotkey(const QString& group, const QString& action, QWidget* widge
         hk.shortcut = new QShortcut(hk.keyseq, widget, nullptr, nullptr, hk.context);
 
     return hk.shortcut;
-}
-
-GHotkeysDialog::GHotkeysDialog(QWidget* parent) : QWidget(parent) {
-    ui.setupUi(this);
-
-    for (auto group : hotkey_groups) {
-        QTreeWidgetItem* toplevel_item = new QTreeWidgetItem(QStringList(group.first));
-        for (auto hotkey : group.second) {
-            QStringList columns;
-            columns << hotkey.first << hotkey.second.keyseq.toString();
-            QTreeWidgetItem* item = new QTreeWidgetItem(columns);
-            toplevel_item->addChild(item);
-        }
-        ui.treeWidget->addTopLevelItem(toplevel_item);
-    }
-    // TODO: Make context configurable as well (hiding the column for now)
-    ui.treeWidget->setColumnCount(2);
-
-    ui.treeWidget->resizeColumnToContents(0);
-    ui.treeWidget->resizeColumnToContents(1);
 }

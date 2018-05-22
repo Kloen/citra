@@ -4,12 +4,25 @@
 
 #pragma once
 
-#include "ui_hotkeys.h"
+#include <map>
 
 class QDialog;
 class QKeySequence;
 class QSettings;
 class QShortcut;
+
+struct Hotkey {
+    Hotkey() : shortcut(nullptr), context(Qt::WindowShortcut) {}
+
+    QKeySequence keyseq;
+    QShortcut* shortcut;
+    Qt::ShortcutContext context;
+};
+
+typedef std::map<QString, Hotkey> HotkeyMap;
+typedef std::map<QString, HotkeyMap> HotkeyGroupMap;
+
+extern HotkeyGroupMap hotkey_groups;
 
 /**
  * Register a hotkey.
@@ -52,13 +65,3 @@ void SaveHotkeys();
  * registered.
  */
 void LoadHotkeys();
-
-class GHotkeysDialog : public QWidget {
-    Q_OBJECT
-
-public:
-    explicit GHotkeysDialog(QWidget* parent = nullptr);
-
-private:
-    Ui::hotkeys ui;
-};
