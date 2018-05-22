@@ -40,14 +40,6 @@ void LoadHotkeys() {
     }
 }
 
-void RegisterHotkey(const QString& group, const QString& action, const QKeySequence& default_keyseq,
-                    Qt::ShortcutContext default_context) {
-    if (hotkey_groups[group].find(action) == hotkey_groups[group].end()) {
-        hotkey_groups[group][action].keyseq = default_keyseq;
-        hotkey_groups[group][action].context = default_context;
-    }
-}
-
 QShortcut* GetHotkey(const QString& group, const QString& action, QWidget* widget) {
     Hotkey& hk = hotkey_groups[group][action];
 
