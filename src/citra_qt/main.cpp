@@ -1098,6 +1098,7 @@ void GMainWindow::OnConfigure() {
         UpdateUITheme();
         SyncMenuUISettings();
         config->Save();
+        InitializeHotkeys();
     }
 }
 
